@@ -11,7 +11,6 @@
     --primary-dark: #4A3FC7;
     --accent: #FFB86B;
     --success: #2ECC71;
-    --danger: #E74C3C;
     --bg: #F7F6FB;
     --card: #FFFFFF;
     --text: #2D3436;
@@ -30,11 +29,10 @@
     width:40px; height:40px; background:white; border-radius:12px;
     display:flex; align-items:center; justify-content:center; font-size:22px;
   }
-  nav { display:flex; gap:8px; }
+  nav { display:flex; gap:8px; flex-wrap:wrap; }
   nav button {
     background: rgba(255,255,255,0.15); color:white; border:none;
     padding:8px 14px; border-radius:10px; cursor:pointer; font-size:14px;
-    transition: all 0.2s;
   }
   nav button:hover, nav button.active { background: rgba(255,255,255,0.3); }
   .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
@@ -107,7 +105,6 @@
   .chat-input button {
     background: var(--primary); color:white; border:none;
     padding: 0 20px; border-radius: 12px; cursor:pointer; font-size:15px;
-    transition: background 0.2s;
   }
   .chat-input button:hover { background: var(--primary-dark); }
   .chat-input button:disabled { background: var(--muted); cursor: not-allowed; }
@@ -123,31 +120,25 @@
   .modal-content {
     background:white; padding:30px; border-radius:20px; max-width:500px; width:90%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-height: 90vh; overflow-y: auto;
   }
   .modal-content h2 { color:var(--primary-dark); margin-bottom:16px; }
   .modal-content label { display:block; margin:12px 0 6px; font-weight:600; }
-  .modal-content input, .modal-content select {
+  .modal-content input {
     width:100%; padding:10px; border:2px solid #EEE; border-radius:10px; font-size:14px;
   }
-  .modal-content input:focus, .modal-content select:focus { border-color:var(--primary); outline:none; }
+  .modal-content input:focus { border-color:var(--primary); outline:none; }
   .modal-actions { display:flex; gap:10px; margin-top:20px; }
   .btn {
     padding: 12px 28px; border-radius: 12px; border:none;
-    cursor:pointer; font-size:15px; font-weight:600; transition: all 0.2s;
+    cursor:pointer; font-size:15px; font-weight:600; flex:1;
   }
   .btn-primary { background: var(--primary); color:white; }
-  .btn-primary:hover { background: var(--primary-dark); }
   .btn-outline { background: white; color: var(--primary); border: 2px solid var(--primary); }
-  .error-box {
-    background: #FDECEA; border: 2px solid var(--danger);
-    color: var(--danger); padding: 12px; border-radius: 10px;
-    margin: 10px 0; font-size: 14px;
+  .info-box {
+    background:#F0EDFF; padding:12px; border-radius:10px; margin-top:16px; font-size:13px;
   }
-  .success-box {
-    background: #E8F8EF; border: 2px solid var(--success);
-    color: var(--success); padding: 12px; border-radius: 10px;
-    margin: 10px 0; font-size: 14px;
-  }
+  .info-box a { color:var(--primary); }
   @media (max-width: 640px) {
     .hero h1 { font-size: 24px; }
     nav button { padding: 6px 10px; font-size: 12px; }
@@ -167,9 +158,9 @@
   </div>
   <nav>
     <button class="active" onclick="showPage('home', this)">🏠 الرئيسية</button>
-    <button onclick="showPage('explain', this)">🧠 Explain It</button>
-    <button onclick="showPage('progress', this)"> تقدمي</button>
-    <button class="settings-btn" onclick="openSettings()">️ الإعدادات</button>
+    <button onclick="showPage('explain', this)"> Explain It</button>
+    <button onclick="showPage('progress', this)">📊 تقدمي</button>
+    <button class="settings-btn" onclick="openSettings()">⚙️</button>
   </nav>
 </header>
 
@@ -182,19 +173,19 @@
     </div>
     <div class="features-grid">
       <div class="feature-card" onclick="showPage('explain')">
-        <div class="feature-icon" style="background:#E8F8EF;">🧠</div>
+        <div class="feature-icon" style="background:#E8F8EF;"></div>
         <h3>Explain It</h3>
         <p>اكتبي أي شيء ما فهمتيه — Nune يعلمك طريقة التفكير خطوة بخطوة.</p>
       </div>
       <div class="feature-card" onclick="showPage('progress')">
-        <div class="feature-icon" style="background:#FFF4E0;"></div>
+        <div class="feature-icon" style="background:#FFF4E0;">📊</div>
         <h3>My Progress</h3>
         <p>شوفي تطورك، المهارات اللي أتقنتيها، واللي تحتاج مراجعة.</p>
       </div>
       <div class="feature-card" onclick="openSettings()">
-        <div class="feature-icon" style="background:#F0EDFF;">⚙️</div>
-        <h3>إعدادات AI</h3>
-        <p>أدخلي API Key من OpenRouter (مجاني).</p>
+        <div class="feature-icon" style="background:#F0EDFF;">️</div>
+        <h3>إعدادات Gemini</h3>
+        <p>أدخلي API Key من Google (مجاني 100%).</p>
       </div>
     </div>
   </div>
@@ -202,7 +193,7 @@
   <div id="explain" class="page">
     <div class="chat-container">
       <div class="chat-header">
-        <div class="avatar"></div>
+        <div class="avatar">🧠</div>
         <div>
           <div style="font-weight:bold;">Nune AI</div>
           <div style="font-size:12px; opacity:0.9;">
@@ -212,14 +203,14 @@
       </div>
       <div class="chat-messages" id="chatMessages">
         <div class="msg ai">
-          <div class="msg-avatar">🧠</div>
+          <div class="msg-avatar"></div>
           <div class="msg-bubble">
             أهلاً! 👋 أنا Nune. قولي وش اللي ما فهمتيه، وبنمشي سوا خطوة بخطوة:<br>
             <b>1.</b> نشرح الفكرة ببساطة<br>
             <b>2.</b> نعطيك مثال<br>
             <b>3.</b> نخليك تحاولين<br>
             <b>4.</b> نحلل الخطأ ونعطيك سؤال مشابه<br><br>
-            <span style="color:var(--muted); font-size:13px;">💡 استخدمي OpenRouter (مجاني) من الإعدادات</span>
+            <span style="color:var(--muted); font-size:13px;">💡 استخدمي Google Gemini (مجاني) من الإعدادات</span>
           </div>
         </div>
       </div>
@@ -231,7 +222,7 @@
   </div>
 
   <div id="progress" class="page">
-    <h2 style="color:var(--primary-dark); margin-bottom:16px;">📊 My Progress</h2>
+    <h2 style="color:var(--primary-dark); margin-bottom:16px;"> My Progress</h2>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
       <div style="background: var(--card); padding: 20px; border-radius: 16px; box-shadow: var(--shadow); text-align:center;">
         <div style="font-size: 32px; font-weight:bold; color: var(--primary);" id="statConversations">0</div>
@@ -250,30 +241,27 @@
 
 </div>
 
+<!-- Settings Modal -->
 <div id="settingsModal" class="modal">
   <div class="modal-content">
-    <h2>⚙️ إعدادات AI</h2>
+    <h2>⚙️ إعدادات Google Gemini</h2>
     <p style="color:var(--muted); font-size:14px; margin-bottom:16px;">
-      استخدمي OpenRouter (مجاني 100%)
+      Gemini مجاني 100% - ما يحتاج بطاقة 💜
     </p>
-    <label>مزود الخدمة:</label>
-    <select id="providerSelect">
-      <option value="openrouter">OpenRouter (مجاني - موصى به)</option>
-      <option value="openai">OpenAI</option>
-    </select>
+    
     <label>API Key:</label>
-    <input type="password" id="apiKeyInput" placeholder="sk-... أو مفتاح OpenRouter">
+    <input type="password" id="apiKeyInput" placeholder="AIza...">
     <p style="font-size:12px; color:var(--muted); margin-top:6px;">
-      🔒 المفتاح يُحفظ محلياً في متصفحك فقط
+       المفتاح يُحفظ محلياً في متصفحك فقط
     </p>
-    <label>النموذج:</label>
-    <select id="modelSelect">
-      <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo (سريع ومجاني)</option>
-      <option value="openai/gpt-4o-mini">GPT-4o Mini (أفضل)</option>
-    </select>
-    <div id="providerInfo" style="background:#F0EDFF; padding:12px; border-radius:10px; margin-top:16px; font-size:13px;">
-      💡 <b>OpenRouter:</b> احصلي على مفتاح مجاني من <a href="https://openrouter.ai/keys" target="_blank" style="color:var(--primary);">openrouter.ai/keys</a>
+
+    <div class="info-box">
+      💡 <b>كيف تحصلين على المفتاح:</b><br>
+      1. ادخلي: <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a><br>
+      2. اضغطي <b>Create API Key</b><br>
+      3. انسخي المفتاح (يبدأ بـ AIza...)
     </div>
+
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="saveSettings()">حفظ</button>
       <button class="btn btn-outline" onclick="closeSettings()">إلغاء</button>
@@ -282,13 +270,12 @@
 </div>
 
 <script>
-  let settings = JSON.parse(localStorage.getItem('nuneSettings') || '{"provider":"openrouter","apiKey":"","model":"openai/gpt-3.5-turbo"}');
+  // Settings
+  let settings = JSON.parse(localStorage.getItem('nuneSettings') || '{"provider":"gemini","apiKey":"","model":"gemini-pro"}');
 
   function openSettings() {
     document.getElementById('settingsModal').classList.add('active');
-    document.getElementById('providerSelect').value = settings.provider;
     document.getElementById('apiKeyInput').value = settings.apiKey;
-    document.getElementById('modelSelect').value = settings.model;
   }
 
   function closeSettings() {
@@ -296,9 +283,7 @@
   }
 
   function saveSettings() {
-    settings.provider = document.getElementById('providerSelect').value;
     settings.apiKey = document.getElementById('apiKeyInput').value;
-    settings.model = document.getElementById('modelSelect').value;
     localStorage.setItem('nuneSettings', JSON.stringify(settings));
     updateAIStatus();
     closeSettings();
@@ -308,7 +293,7 @@
   function updateAIStatus() {
     const status = document.getElementById('aiStatus');
     if (settings.apiKey) {
-      status.innerHTML = `🟢 متصل — ${settings.provider.toUpperCase()}`;
+      status.innerHTML = `🟢 متصل — Google Gemini`;
       status.style.color = '#2ECC71';
     } else {
       status.innerHTML = '⚪ اضغطي ⚙️ للإعداد';
@@ -316,6 +301,7 @@
     }
   }
 
+  // Page Navigation
   function showPage(id, btn) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -326,6 +312,7 @@
     window.scrollTo(0, 0);
   }
 
+  // Chat
   const conversationHistory = [];
   const systemPrompt = `أنتِ Nune، مساعدة دراسية ذكية. مهمتك تعليم الطالب طريقة التفكير والحل، وليس إعطاء الإجابة مباشرة.
 
@@ -346,7 +333,7 @@
 
   function sendMessage() {
     if (!settings.apiKey) {
-      alert('️ لازم تضيفين API Key من الإعدادات أولاً!\n\nاستخدمي OpenRouter (مجاني): openrouter.ai/keys');
+      alert('⚠️ لازم تضيفين API Key من الإعدادات أولاً!\n\nاحصلي عليه من: aistudio.google.com/app/apikey');
       openSettings();
       return;
     }
@@ -368,63 +355,42 @@
 
   async function callAI() {
     try {
-      let response, data;
+      const geminiKey = settings.apiKey;
+      const geminiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiKey}`;
       
-      if (settings.provider === 'openrouter') {
-        response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${settings.apiKey}`,
-            'HTTP-Referer': window.location.href,
-            'X-Title': 'Nune Study AI'
-          },
-          body: JSON.stringify({
-            model: settings.model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              ...conversationHistory
-            ]
-          })
-        });
-        
-        data = await response.json();
-        if (data.error) throw new Error(data.error.message);
-        
-        const aiMessage = data.choices[0].message.content;
-        conversationHistory.push({ role: 'assistant', content: aiMessage });
-        addMessage(aiMessage, 'ai');
-        
-      } else if (settings.provider === 'openai') {
-        response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${settings.apiKey}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              ...conversationHistory
-            ],
+      const messages = conversationHistory.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.content }]
+      }));
+      
+      const response = await fetch(geminiURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          contents: [
+            { role: 'user', parts: [{ text: systemPrompt }] },
+            ...messages
+          ],
+          generationConfig: {
             temperature: 0.7,
-            max_tokens: 500
-          })
-        });
-        
-        data = await response.json();
-        if (data.error) throw new Error(data.error.message);
-        
-        const aiMessage = data.choices[0].message.content;
-        conversationHistory.push({ role: 'assistant', content: aiMessage });
-        addMessage(aiMessage, 'ai');
-      }
+            maxOutputTokens: 500
+          }
+        })
+      });
+      
+      const data = await response.json();
+      if (data.error) throw new Error(data.error.message);
+      
+      const aiMessage = data.candidates[0].content.parts[0].text;
+      conversationHistory.push({ role: 'assistant', content: aiMessage });
+      addMessage(aiMessage, 'ai');
       
       recordSkill('محادثات AI', 100);
       
     } catch (error) {
-      addMessage(`❌ خطأ: ${error.message}\n\nتأكدي من:\n1. صحة API Key\n2. وجود رصيد كافي\n3. اختيار نموذج متاح`, 'ai');
+      addMessage(`❌ خطأ: ${error.message}\n\nتأكدي من:\n1. صحة API Key (يبدأ بـ AIza)\n2. اتصالك بالإنترنت`, 'ai');
     } finally {
       const sendBtn = document.getElementById('sendBtn');
       sendBtn.disabled = false;
@@ -436,7 +402,7 @@
     const box = document.getElementById('chatMessages');
     const div = document.createElement('div');
     div.className = 'msg ' + sender;
-    const avatar = sender === 'ai' ? '🧠' : '👤';
+    const avatar = sender === 'ai' ? '🧠' : '';
     div.innerHTML = `
       <div class="msg-avatar">${avatar}</div>
       <div class="msg-bubble">${text}</div>
@@ -445,6 +411,7 @@
     box.scrollTop = box.scrollHeight;
   }
 
+  // Progress
   let stats = JSON.parse(localStorage.getItem('nuneStats') || '{"conversations":0,"skills":{}}');
 
   function saveStats() {
@@ -485,6 +452,7 @@
     }
   }
 
+  // Init
   updateAIStatus();
   renderProgress();
 </script>
