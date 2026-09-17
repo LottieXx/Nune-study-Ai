@@ -12,7 +12,7 @@
 
 ## 🌐 الرابط المباشر
 
-[افتح التطبيق](https://LottieXx.github.io/Nune-study-Ai/)
+[افتح التطبيق](https://lottiexx.github.io/Nune-study-Ai/) 
 
 ##  التوثيق
 
